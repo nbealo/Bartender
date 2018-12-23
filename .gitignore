@@ -1,3 +1,4 @@
 
 .pyc
-/bin
+bin/
+__pycache__/
