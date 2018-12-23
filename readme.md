@@ -1,7 +1,20 @@
-# BartenderMan Library
+# Barbot Library
+
+## Development
+To begin, ensure that your system has python v3 installed, and pip installed.
+Then, install the dependencies with....
+```
+pip install -r requirements.txt
+```
+
+Now, to run the application...
+```
+python app/main.py
+```
+
 
 ## Spec
-BartenderMan uses a JSON formatted spec to configure drink jobs and system settings. 
+Barbot uses a JSON formatted spec to configure drink jobs and system settings. 
 
 System Settings 
 ```
@@ -69,7 +82,7 @@ Drink Configuration
 }
 ```
 
-Using the above spec, a BartenderMan can be configured to create any mix drink that is a composition of available ingredients. The BartenderMan will have one `System Settings` spec, and several `Drink Configuration` specs. A `/config` directory will hold these files in the following layout,
+Using the above spec, a Barbot can be configured to create any mix drink that is a composition of available ingredients. The BartenderMan will have one `System Settings` spec, and several `Drink Configuration` specs. A `/config` directory will hold these files in the following layout,
 
 ```
     /config
