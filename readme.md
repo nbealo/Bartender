@@ -40,7 +40,7 @@ System Settings
 }
 ```
 
-Sample Drink Configuration
+Drink Configuration
 ```json
 {
     // the name of the beverage
@@ -69,4 +69,13 @@ Sample Drink Configuration
 }
 ```
 
-Using the above spec, a BartenderMan can be configured to create any mix drink that is a composition of available ingredients
+Using the above spec, a BartenderMan can be configured to create any mix drink that is a composition of available ingredients. The BartenderMan will have one `System Settings` spec, and several `Drink Configuration` specs. A `/config` directory will hold these files in the following layout,
+
+```
+    /config
+        system_spec.json
+        /drinks
+            jack_n_code.json
+            gin_n_tonic.json
+            shirley_temply.json
+```
