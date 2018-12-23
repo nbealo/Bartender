@@ -1,0 +1,16 @@
+{
+    "scale_pin_number": "335",
+    "scale_weight_offset": "0",
+    "ingredients": [
+        {
+            "name": "Jack",
+            "pin_number": "330",
+            "volume": "1"
+        },
+        {
+            "name": "Coke",
+            "pin_number": "331",
+            "volume": "1"
+        }
+    ]
+}
