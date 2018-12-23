@@ -4,7 +4,7 @@
 BartenderMan uses a JSON formatted spec to configure drink jobs and system settings. 
 
 System Settings 
-```json
+```
 {
     // the pin of the scale
     "weight_pin": "43",
@@ -41,7 +41,7 @@ System Settings
 ```
 
 Drink Configuration
-```json
+```
 {
     // the name of the beverage
     "name": "Jack n Coke",
