@@ -12,7 +12,6 @@ Now, to run the application...
 python app/main.py
 ```
 
-hi
 
 ## Spec
 Barbot uses a JSON formatted spec to configure drink jobs and system settings. 
