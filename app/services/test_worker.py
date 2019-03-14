@@ -31,12 +31,13 @@ class WorkerThread(threading.Thread):
         
         self.hx = HX711(5, 6)
         self.hx.set_reading_format("MSB", "MSB")
-        self.hx.set_reference_unit(462)
+        # self.reference_unit = 462
+        # self.hx.set_reference_unit(self.reference_unit)
         self.hx.reset()
         while not self.stoprequest.isSet():
 
-            val = self.hx.get_weight()
-            # val = self.hx.read_long()
+            val = self.hx.read_long()
+            # weight = val / self.reference_unit
             print(val)
 
             # To get weight from both channels (if you have load cells hooked up 
