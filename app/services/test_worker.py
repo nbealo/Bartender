@@ -32,16 +32,20 @@ class WorkerThread(threading.Thread):
         self.hx = HX711(5, 6)
         self.hx.set_reading_format("MSB", "MSB")
 
-        # 458591
+        # 1 kg -> 458591 -> 460
+        # 2.75 kg -> 
 
         self.reference_unit = 460
-        self.hx.set_reference_unit(self.reference_unit)
+        # self.hx.set_reference_unit(self.reference_unit)
         self.hx.reset()
         while not self.stoprequest.isSet():
 
             val = self.hx.read_long()
-            weight = val / self.reference_unit
-            print(weight)
+            # weight = val / self.reference_unit
+            print(val)
+
+            # self.blackboard.set('weight', weight)
+
 
             # To get weight from both channels (if you have load cells hooked up 
             # to both channel A and B), do something like this
