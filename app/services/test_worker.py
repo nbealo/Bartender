@@ -5,7 +5,7 @@ import threading
 from queue import Queue
 import queue
 
-EMULATE_HX711=True
+EMULATE_HX711=False
 
 if not EMULATE_HX711:
     import RPi.GPIO as GPIO

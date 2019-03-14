@@ -9,10 +9,6 @@ import threading
 # device.hello()
 
 class HX711:
-
-    def hello:
-        print(self.DOUT)
-
     def __init__(self, dout, pd_sck, gain=128):
         self.PD_SCK = pd_sck
 
