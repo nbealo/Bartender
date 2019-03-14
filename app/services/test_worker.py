@@ -30,7 +30,7 @@ class WorkerThread(threading.Thread):
     def run(self):
         self.hx = HX711(5, 6)
         self.hx.set_reading_format("MSB", "MSB")
-        self.hx.set_reference_unit(1)
+        # self.hx.set_reference_unit(1)
         self.hx.reset()
         while not self.stoprequest.isSet():
 
@@ -45,7 +45,7 @@ class WorkerThread(threading.Thread):
 
             self.hx.power_down()
             self.hx.power_up()
-            time.sleep(0.1)
+            time.sleep(0.01)
             # copy code from the example hx711 sample
 
             # increment the data.
