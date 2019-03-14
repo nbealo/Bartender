@@ -10,7 +10,7 @@ from services.persistence_service import PersistenceService
 from flask import Flask
 
 from services.test_worker import WorkerThread, WorkerCommandMessage
-from models.blackboard import Blackboard, BlackboardVariableMessage
+from models.blackboard import Blackboard
 
 command_queue = Queue()
 output_queue = Queue()
@@ -39,10 +39,10 @@ worker.start()
 
 # handle application shutdown...
 def signal_handler(sig, frame):
-        print('Shutting down...')
-        worker.join()
-        print('Goodbye!')
-        sys.exit(0)
+    print('Shutting down...')
+    worker.join()
+    print('Goodbye!')
+    sys.exit(0)
 
 signal.signal(signal.SIGINT, signal_handler)
 
