@@ -31,7 +31,7 @@ class WorkerThread(threading.Thread):
         
         self.hx = HX711(5, 6)
         self.hx.set_reading_format("MSB", "MSB")
-
+        
         # 1 kg -> 458591 -> 460
         # 2.75 kg -> 1146261 -> 416
 

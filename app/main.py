@@ -21,7 +21,7 @@ app = Flask(__name__)
 def main():
     global blackboard
 
-    return "VALUE: " + str(blackboard.get('x'))
+    return "VALUE: " + str(blackboard.get('weight'))
 
 @app.route("/set/<int:val>")
 def main2(val):
