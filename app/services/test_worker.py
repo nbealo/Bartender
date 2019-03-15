@@ -42,13 +42,13 @@ class WorkerThread(threading.Thread):
         # 2.75 kg -> 591915 -> 215
 
         self.reference_unit = 215
-        self.hx.set_reference_unit(self.reference_unit)
+        # self.hx.set_reference_unit(self.reference_unit)
         self.hx.reset()
         while not self.stoprequest.isSet():
 
             val = self.hx.read_long()
             weight = 0
-            weight = val / self.reference_unit
+            # weight = val / self.reference_unit
             print(str(val) + ', ' + str(weight))
 
             self.blackboard.set('weight', weight)
