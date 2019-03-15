@@ -29,19 +29,20 @@ class WorkerThread(threading.Thread):
 
     def run(self):
         
-        self.hx = HX711(5, 6)
+        self.hx = HX711(5, 6, 64)
         self.hx.set_reading_format("MSB", "MSB")
-        
+
         # 1 kg -> 458591 -> 460
         # 2.75 kg -> 1146261 -> 416
 
         self.reference_unit = 416
-        self.hx.set_reference_unit(self.reference_unit)
+        # self.hx.set_reference_unit(self.reference_unit)
         self.hx.reset()
         while not self.stoprequest.isSet():
 
             val = self.hx.read_long()
-            weight = val / self.reference_unit
+            weight = 0
+            # weight = val / self.reference_unit
             print(str(val) + ', ' + str(weight))
 
             self.blackboard.set('weight', weight)
