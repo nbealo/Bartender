@@ -44,7 +44,7 @@ class WorkerThread(threading.Thread):
 
         # 31913, 85646, with 
 
-        self.reference_unit = 338
+        self.reference_unit = 460
         self.hx.set_reference_unit(self.reference_unit)
         self.hx.reset()
 
