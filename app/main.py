@@ -9,7 +9,7 @@ from models.system_spec_model import SystemSpecModel
 from services.persistence_service import PersistenceService
 from flask import Flask
 
-from services.test_worker import WorkerThread, WorkerCommandMessage
+from services.test_worker import WorkerThread, WorkerCommandMessage, WorkerZeroMessage
 from models.blackboard import Blackboard
 
 command_queue = Queue()
