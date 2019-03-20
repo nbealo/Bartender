@@ -1,11 +1,12 @@
 import os, time
 import threading
+from services.persistence_service import PersistenceService
 
 
 from queue import Queue
 import queue
 
-EMULATE_HX711=False
+EMULATE_HX711=True
 
 if not EMULATE_HX711:
     import RPi.GPIO as GPIO
@@ -23,6 +24,10 @@ class WorkerZeroMessage:
     def __init__(self):
         pass
 
+class WorkerDrinkMessage:
+    def __init__(self, drink_name):
+        self.drink_name = drink_name
+
 class WorkerThread(threading.Thread):
     def __init__(self, command_queue, output_queue, blackboard):
         super(WorkerThread, self).__init__()
@@ -30,11 +35,14 @@ class WorkerThread(threading.Thread):
         self.command_queue = command_queue
         self.output_queue = output_queue
         self.blackboard = blackboard
+        self.drink = None
 
     def run(self):
         
         self.hx = HX711(5, 6)
         self.hx.set_reading_format("MSB", "MSB")
+
+        self.config = PersistenceService.load_config('./app/config')
 
 
         # at 128 gain.
@@ -61,7 +69,7 @@ class WorkerThread(threading.Thread):
             val = self.hx.read_long()
             weight = 0
             weight = (val - self.first_long) / self.reference_unit
-            print(str(val) + ', ' + str(weight))
+            # print(str(val) + ', ' + str(weight))
 
             self.blackboard.set('weight', weight)
 
@@ -72,11 +80,16 @@ class WorkerThread(threading.Thread):
             #val_B = hx.get_weight_B(5)
             #print "A: %s  B: %s" % ( val_A, val_B )
 
+            # if we are making a drink...
+                # do this shit...
+
+            # otherwise, do nothing
+
             self.hx.power_down()
             self.hx.power_up()
             time.sleep(0.01)
             # copy code from the example hx711 sample
-
+            # print(self.drink)
             # increment the data.
             # self.blackboard.set('x', self.blackboard.get('x') + 1)
             # time.sleep(1)
@@ -86,8 +99,13 @@ class WorkerThread(threading.Thread):
                 command = self.command_queue.get(True, 0.05)
                 if isinstance(command, WorkerZeroMessage):
                     self.first_long = val
-                #if isinstance(command, WorkerDrinkMessage):
-                    #pass
+                if isinstance(command, WorkerDrinkMessage):
+                    self.drink_name = command.drink_name
+                    self.drink = next( (d for d in self.config[1] if d.name==command.drink_name) )
+                    print('drink!')
+                    print(self.drink)
+                    print(self.drink.components)
+
             except queue.Empty:
                 continue
         print('worker shutting down')

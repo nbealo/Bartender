@@ -9,13 +9,14 @@ from models.system_spec_model import SystemSpecModel
 from services.persistence_service import PersistenceService
 from flask import Flask
 
-from services.test_worker import WorkerThread, WorkerCommandMessage, WorkerZeroMessage
+from services.test_worker import WorkerThread, WorkerCommandMessage, WorkerZeroMessage, WorkerDrinkMessage
 from models.blackboard import Blackboard
 
 command_queue = Queue()
 output_queue = Queue()
 
 app = Flask(__name__)
+
 
 @app.route("/")
 def main():
@@ -28,6 +29,17 @@ def zero():
     global command_queue
     command_queue.put( WorkerZeroMessage() )
     return "Zeroing..."
+
+# bartender:5000/drink/gin_n_tonic
+@app.route("/drink/<string:name>")
+def make_drink(name):
+    print('requesting drink...')
+    print(name)
+
+    global command_queue
+    command_queue.put( WorkerDrinkMessage(name))
+
+    return "la la la"
 
 @app.route("/set/<int:val>")
 def main2(val):

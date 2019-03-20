@@ -69,14 +69,14 @@ Drink Configuration
             "name": "Jack Daniels",
 
             // how much 
-            "volume": "1"
+            "parts": "1"
         },
         {
             // the name of the Coke
             "name": "Coke",
 
             // how much
-            "volume": "2"
+            "parts": "2"
         }
     ]
 }
