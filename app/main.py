@@ -23,6 +23,12 @@ def main():
 
     return "WEIGHT: " + str(blackboard.get('weight'))
 
+@app.route("/zero")
+def zero():
+    global command_queue
+    command_queue.put( WorkerZeroMessage() )
+    return "Zeroing..."
+
 @app.route("/set/<int:val>")
 def main2(val):
     global command_queue

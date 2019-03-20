@@ -19,6 +19,10 @@ class WorkerCommandMessage:
     def __init__(self, n):
         self.n = n
 
+class WorkerZeroMessage:
+    def __init__(self):
+        pass
+
 class WorkerThread(threading.Thread):
     def __init__(self, command_queue, output_queue, blackboard):
         super(WorkerThread, self).__init__()
@@ -44,7 +48,7 @@ class WorkerThread(threading.Thread):
 
         # 31913, 85646, with 
 
-        self.reference_unit = 460
+        self.reference_unit = 382
         self.hx.set_reference_unit(self.reference_unit)
         self.hx.reset()
 
@@ -78,12 +82,14 @@ class WorkerThread(threading.Thread):
             # time.sleep(1)
 
             # # read data off the queue, or continue to next loop.
-            # try:
-            #     command = self.command_queue.get(True, 0.05)
-            #     if isinstance(command, WorkerCommandMessage):
-            #         self.blackboard.set('x', command.n)
-            # except queue.Empty:
-            #     continue
+            try:
+                command = self.command_queue.get(True, 0.05)
+                if isinstance(command, WorkerZeroMessage):
+                    self.first_long = val
+                #if isinstance(command, WorkerDrinkMessage):
+                    #pass
+            except queue.Empty:
+                continue
         print('worker shutting down')
 
     def join(self, timeout=None):
