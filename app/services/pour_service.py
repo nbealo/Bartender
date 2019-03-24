@@ -27,9 +27,9 @@ class PourService:
 
     def update_blackboard(self):
         self.blackboard.set('pour.pouring', self.drink != None)
-        self.blackboard.set('pour.drink.name', self.drink.name)
+        self.blackboard.set('pour.drink.name', self.drink.name if self.drink != None else None)
         self.blackboard.set('pour.component.index', self.component_index)
-        self.blackboard.set('pour.component.name', self.component.name)
+        self.blackboard.set('pour.component.name', self.component.name if self.component != None else None)
         self.blackboard.set('pour.component.startWeight', self.start_weight)
         self.blackboard.set('pour.component.stopWeight', self.stop_weight)
 
