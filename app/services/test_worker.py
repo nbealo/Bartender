@@ -1,7 +1,7 @@
 import os, time
 import threading
 from services.persistence_service import PersistenceService
-
+from services.pour_service import PourService
 
 from queue import Queue
 import queue
@@ -44,6 +44,7 @@ class WorkerThread(threading.Thread):
 
         self.config = PersistenceService.load_config('./app/config')
 
+        self.pourer = PourService(self.blackboard, self.config[0], self.config[1])
 
         # at 128 gain.
         # 1 kg -> 458591 -> 460
@@ -73,6 +74,11 @@ class WorkerThread(threading.Thread):
 
             self.blackboard.set('weight', weight)
 
+            self.pourer.set_weight(weight)
+            pin_map = self.pourer.process_pour(weight)
+            for pin in pin_map:
+                # for each pin returned by the pourer, set that pin's high or low.
+                GPIO.output(pin, pin_map[pin])
 
             # To get weight from both channels (if you have load cells hooked up 
             # to both channel A and B), do something like this
@@ -100,16 +106,21 @@ class WorkerThread(threading.Thread):
                 if isinstance(command, WorkerZeroMessage):
                     self.first_long = val
                 if isinstance(command, WorkerDrinkMessage):
-                    self.drink_name = command.drink_name
-                    self.drink = next( (d for d in self.config[1] if d.name==command.drink_name) )
-                    print('drink!')
-                    print(self.drink)
-                    print(self.drink.components)
+                    self.pourer.start_pouring(command.drink_name)
+
 
             except queue.Empty:
                 continue
         print('worker shutting down')
 
     def join(self, timeout=None):
+
+        # TODO CLEAN UP HX711
+
+        self.pourer.die()
+        pin_map = self.pourer.process_pour(weight)
+        for pin in pin_map:
+            GPIO.output(pin, pin_map[pin])
+            
         self.stoprequest.set()
         super(WorkerThread, self).join(timeout)

@@ -24,6 +24,11 @@ def main():
 
     return "WEIGHT: " + str(blackboard.get('weight'))
 
+@app.route('/blackboard')
+def blackboard():
+    global blackboard
+    return blackboard.as_json()
+
 @app.route("/zero")
 def zero():
     global command_queue
